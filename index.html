@@ -18,9 +18,8 @@
   <script src="https://code.angularjs.org/1.2.1/angular.min.js"></script>
 
   <!-- angular-chart.js -->
-    <script src="js/Chart.min.js"></script>
+  <script src="js/Chart.min.js"></script>
   <script src="js/angular-chart.min.js"></script>
-
 
 
   <!-- Bootstrap core CSS -->
@@ -56,13 +55,11 @@
 <div ng-controller="MyCtrl" class="container">
 
   <div class="page-header">
-    <h1 class="text-center">Visualizing Mathematical Combinations and Permutations</h1>
+    <h1 class="text-center">Visualizing The Standard Distribution of the Sample Mean</h1>
 
     <h2 class="text-center">by Paul Ebreo</h2>
 
-    <p class="lead text-center">An interactive web app that demonstrates combinations and permutations and the
-      difference between
-      them.</p>
+    <p class="lead text-center">An interactive web app that demonstrates the concept of the SDSM.</p>
   </div>
 
 
@@ -71,12 +68,10 @@
     <div class="col-md-6">
 
       <div class="panel panel-default">
-        <div class="panel-heading"><h4>Step 1. Create a unique list of items (set)</h4></div>
+        <div class="panel-heading"><h4>Step 1. Choose a Data Distribution (set)</h4></div>
         <div class="panel-body">
-          <canvas id="line" class="chart chart-line" chart-data="data"
-                  chart-labels="labels" chart-series="series" chart-options="options"
-                  chart-dataset-override="datasetOverride" chart-click="onClick">
-
+          <canvas id="bar" class="chart chart-bar"
+                  chart-data="data" chart-labels="labels"> chart-series="series">
           </canvas>
         </div>
       </div>
