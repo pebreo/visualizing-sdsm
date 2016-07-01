@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../favicon.ico">
+
+  <title>Grid Template for Bootstrap</title>
+
+
+  <!-- LoDash -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.13.1/lodash.min.js"></script>
+  <!-- AngularJS -->
+  <script src="https://code.angularjs.org/1.2.1/angular.min.js"></script>
+
+  <!-- angular-chart.js -->
+    <script src="js/Chart.min.js"></script>
+  <script src="js/angular-chart.min.js"></script>
+
+
+
+  <!-- Bootstrap core CSS -->
+  <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="" rel="stylesheet">
+
+  <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+  <!--[if lt IE 9]>
+  <script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <style>
+
+    #square {
+      width: 45px;
+      height: 45px;
+      background: mediumslateblue;
+    }
+  </style>
+</head>
+
+<body ng-app="myApp">
+<div ng-controller="MyCtrl" class="container">
+
+  <div class="page-header">
+    <h1 class="text-center">Visualizing Mathematical Combinations and Permutations</h1>
+
+    <h2 class="text-center">by Paul Ebreo</h2>
+
+    <p class="lead text-center">An interactive web app that demonstrates combinations and permutations and the
+      difference between
+      them.</p>
+  </div>
+
+
+  <div class="row">
+
+    <div class="col-md-6">
+
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4>Step 1. Create a unique list of items (set)</h4></div>
+        <div class="panel-body">
+          <canvas id="line" class="chart chart-line" chart-data="data"
+                  chart-labels="labels" chart-series="series" chart-options="options"
+                  chart-dataset-override="datasetOverride" chart-click="onClick">
+
+          </canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+
+      <div class="panel panel-default">
+        <div class="panel-heading"><h4>Step 1. Create a unique list of items (set)</h4></div>
+        <div class="panel-body">
+          <p>Combinations and Permutations are made of unique items in a set. Click 'Remove Item' or 'Add Item'
+            to make the set bigger or smaller. These items will be picked and arranged in the Permutations and
+            Combinations below.
+          </p>
+
+          <form role="form">
+
+            <div class="form-group">
+              <button ng-click="remove_item()" type="submit" class="btn btn-success">Remove Item</button>
+              <button ng-click="additem()" type="submit" class="btn btn-success">Add Item</button>
+            </div>
+
+          </form>
+
+          <p>
+
+          <h3>{{item_count}} items</h3>
+          </p>
+          <div class="btn-group btn-group-justified" role="group" aria-label="...">
+            <my-elem></my-elem>
+          </div>
+
+          <p>
+
+          <form role="form">
+
+            <div class="form-group">
+              <button ng-click="decrease_slot()" type="submit" class="btn btn-info">Decrease Number of Slots</button>
+              <button ng-click="add_slot()" type="submit" class="btn btn-info">Increase Number of Slots</button>
+            </div>
+
+          </form>
+          </p>
+          <p>
+
+          <h3>{{slot_count}} slots</h3>
+          </p>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6"></div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+
+      <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading"><h4>Step 2. Permutations</h4></div>
+        <div class="panel-body">
+          <p>A mathematical permutation is the <b>number of different ways</b> the items from a set (above)
+            can be arranged. In permutations, we count all the uniquely arranged items toward the final permutation
+            number. For example, the arrangement 123 is counted separately from 321 and is therefore counted
+            as 2 separate permutations.</p>
+
+          <p> From the set of items we created above, there are <b>{{permutations_count}} permutations for
+            {{item_count}} items, given {{slot_count}} slots.</b>.</p>
+
+        </div>
+
+        <!-- List group -->
+        <ul class="list-group">
+          <perm-elem></perm-elem>
+        </ul>
+      </div>
+
+    </div>
+    <div class="col-md-6">
+
+
+      <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading"><h4>Step 3. Combinations</h4></div>
+        <div class="panel-body">
+          <p>A mathematical combination is basically the <b>number of groups</b> of arranged items. For example, an
+            arrangement of 1234 is the same as 4321
+            and therefore is counted as 1 single combination.
+          </p>
+
+          <p> From the set of items we created above, there are <b>{{combinations_count}} combinations for
+            {{item_count}} items, given {{slot_count}} slots</b>.</p>
+        </div>
+
+        <!-- List group -->
+        <ul class="list-group">
+          <combo-elem></combo-elem>
+        </ul>
+      </div>
+
+
+    </div>
+  </div>
+
+
+</div>
+<!-- /container -->
+
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<script src="js/app.js"></script>
+
+</body>
+</html>
