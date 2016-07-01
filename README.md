@@ -3,7 +3,7 @@
 
 http://stackoverflow.com/questions/9960908/permutations-in-javascript
 
-# http://pebreo.github.io/combinations-visualization/
+# http://pebreo.github.io/visualizing-sdsm
 
 Installation
 ---------
