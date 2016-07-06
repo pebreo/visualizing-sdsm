@@ -70,8 +70,10 @@
       <div class="panel panel-default">
         <div class="panel-heading"><h4>Step 1. Choose the type of population data (normal, uniform, skewed) </h4></div>
         <div class="panel-body">
+          <p>Mean = {{mean}}</p>
+          <p>Median = {{median}}</p>
           <canvas id="bar" class="chart chart-bar"
-                  chart-data="data" chart-labels="labels"> chart-series="series">
+                  chart-data="data" chart-labels="labels" chart-options="options"> chart-series="series">
           </canvas>
         </div>
       </div>

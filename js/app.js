@@ -44,11 +44,11 @@ app.controller('MyCtrl', ['$scope', '$log', function ($scope, $log) {
         return items;
     };
 
-    $scope.make_button_row = function(arrangement) {
+    $scope.make_button_row = function (arrangement) {
         //var list = [1,2];
         //$log.log(arrangement);
         var items = [];
-        for(i=0; i<arrangement.length;i++) {
+        for (i = 0; i < arrangement.length; i++) {
             items.push($scope.item_names[arrangement[i]]);
         }
         //$log.log(items);
@@ -83,9 +83,6 @@ app.controller('MyCtrl', ['$scope', '$log', function ($scope, $log) {
     };
 
 
-
-
-
     //$scope.$watch('item_count', function(){
     //    $scope.perm_set_items = $scope.range(1, $scope.item_count);
     //    $scope.perm_choose_list = permutations_choose($scope.perm_set_items, $scope.slot_count);
@@ -98,18 +95,62 @@ app.controller('MyCtrl', ['$scope', '$log', function ($scope, $log) {
     //
     //});
 
+    var sum = function(obj, key) {
+        var arr;
+        if (_.isArray(obj) && typeof obj[0] === 'number') {
+          arr = obj;
+        } else {
+          key = key || 'value';
+          arr = _.pluck(obj, key);
+        }
+        var val = 0, i;
+        for (i = 0; i < arr.length; i++)
+          val += (arr[i]-0);
+        return val;
+    };
+
+    var sort = function(arr) {
+        return _.sortBy(arr, _.identity);
+    };
+
+    var mean = ave = average = function(obj, key) {
+        return sum(obj, key) / _.size(obj);
+     };
+
+    var median = function(arr) {
+        arr = arr.slice(0); // create copy
+        var middle = (arr.length + 1) / 2,
+          sorted = sort(arr);
+        return (sorted.length % 2) ? sorted[middle - 1] : (sorted[middle - 1.5] + sorted[middle - 0.5]) / 2;
+    };
 
 
+    $scope.normal_dist = {
+        title: 'Normal Distribution',
+        freq: [3,17,28,92,197,334,556,800,1045,1275,1288,1263,1095,774,569,335,175,94,36,20,6]
+    };
 
-   $scope.labels = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-  $scope.series = ['Series A', 'Series B'];
+    //$scope.labels = ['1', '2', '3', '4', '5', '6', '7', '8','9','10','11','12','13','14','15',
+    //                    '16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32'];
 
-  $scope.data = [
-    [65, 59, 80, 81, 56, 55, 40],
-    [28, 48, 40, 19, 86, 27, 90]
-  ];
-
+    $scope.labels = ['1', '2', '3', '4', '5', '6', '7', '8','9','10','11','12','13','14','15',
+                        '16','17','18','19','20','21'];
+    $scope.series = [''];
 
 
+    $scope.data = [
+        $scope.normal_dist['freq']
+    ];
+
+    $scope.options = {
+        title: {
+            display: true,
+            text: $scope.normal_dist['title']
+
+        },
+    };
+
+    $scope.median = median($scope.normal_dist['freq']);
+    $scope.mean = mean($scope.normal_dist['freq']);
 
 }]);
