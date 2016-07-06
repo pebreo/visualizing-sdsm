@@ -70,6 +70,20 @@
       <div class="panel panel-default">
         <div class="panel-heading"><h4>Step 1. Choose the type of population data (normal, uniform, skewed) </h4></div>
         <div class="panel-body">
+          <p>Select a type of population data distribution</p>
+          <p>
+
+            <form role="form">
+
+            <div class="form-group">
+              <button ng-click="make_normal()" type="submit" class="btn btn-success">Normal</button>
+              <button ng-click="make_skewed()" type="submit" class="btn btn-success">Skewed</button>
+              <button ng-click="make_uniform()" type="submit" class="btn btn-success">Uniform</button>
+            </div>
+
+          </form>
+
+          </p>
           <p>Mean = {{mean}}</p>
           <p>Median = {{median}}</p>
           <canvas id="bar" class="chart chart-bar"
