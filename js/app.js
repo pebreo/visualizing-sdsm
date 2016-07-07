@@ -49,9 +49,10 @@ app.controller('MyCtrl', ['$rootScope','$scope', '$log', 'myservice','math', fun
     };
 
     $scope.rep_sizes = {
+        2: {text:'n = 2'},
         5: {text:'n = 5'},
         1000: {text:'n = 1000'},
-        10000: {text:'n = 10000'},
+        10000: {text:'n = 10000'}
     };
 
     $scope.get_good_items = function () {
@@ -212,28 +213,38 @@ app.controller('MyCtrl', ['$rootScope','$scope', '$log', 'myservice','math', fun
             };
             $scope.median = math.median($scope.uniform_dist['data']);
             $scope.mean = math.mean($scope.uniform_dist['data']);
-        }
-        ;
+        };
+
+        update_created_samples();
 
     });
 
-    var clean_samples = [];
-    $scope.$watch('selected_sample_size', function() {
+    var update_created_samples = function() {
         var s = [];
         var temp_s = [];
+        var mn = 0;
        $log.log('size changed');
-        for(i=0; i<7; i++) {
+        for(i=0; i<$scope.selected_rep_size; i++) {
             s = _.sampleSize($scope.selected_population, $scope.selected_sample_size);
-            temp_s.push(s);
+            mn = math.mean(s);
+            temp_s.push({sample:s, mean:mn});
         }
         $scope.created_samples = temp_s;
-        $log.log($scope.created_samples);
+    };
 
-        //var clean_samples = [];
-        for(i=0;i<$scope.created_samples.length;i++) {
-            clean_samples.push({index:i+1, data:$scope.created_samples[i]});
-        }
+    var update_created_means = function () {
+        $log.log('update means');
+    };
+
+    $scope.$watch('selected_sample_size', function() {
+        update_created_samples();
+
     });
+
+    $scope.$watch('selected_rep_size', function() {
+        update_created_samples();
+    });
+
 
     $scope.sample_5 = function() {
        // using lodash function
@@ -267,7 +278,7 @@ app.controller('MyCtrl', ['$rootScope','$scope', '$log', 'myservice','math', fun
         $log.log('rep size '+ $scope.selected_rep_size);
     };
 
-    var clean_samples = []
+    var clean_samples = [];
 
     $scope.clean_created_samples = function() {
 

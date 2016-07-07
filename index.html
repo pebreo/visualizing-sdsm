@@ -134,7 +134,7 @@
               <div class="dropdown" style="display:inline-block;">
 
                  <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  reps = 2
+                  reps = {{selected_rep_size}}
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
@@ -146,23 +146,22 @@
             </div>
 
 
-
-
         </form>
         <table class="table table-striped">
           <colgroup>
             <col class="col-md-6">
             <col class="col-md-6">
             <thead>
-            <th>Sample Data
+            <th>Sample Data, n = {{selected_sample_size}}
             </th>
             <th>Sample Mean</th>
             </thead>
           </colgroup>
           <tbody>
           <tr ng-repeat="d in created_samples">
-            <td class="col-md-6">S<sub>{{$index+1}}</sub> = {{d}}</td>
-            <td></td>
+            <td class="col-md-6">S<sub>{{$index+1}}</sub> = {{d.sample}}</td>
+            <td class="col-md-6">x&#772;<sub>{{$index+1}}</sub> = {{d.mean}}</td>
+
           </tr>
           </tbody>
 
