@@ -30,14 +30,14 @@ app.controller('MyCtrl', ['$rootScope','$scope', '$log', 'myservice','math', fun
     $scope.selected_data = [];
     $scope.selected_population = [];
     $scope.selected_title = '';
-
-    $scope.item_names = {
-        1: {'button_type': 'btn-primary', 'text': 'One', 'sqcolor': 'red'},
-        2: {'button_type': 'btn-warning', 'text': 'Two', 'sqcolor': 'green'},
-        3: {'button_type': 'btn-info', 'text': 'Three', 'sqcolor': 'orange'},
-        4: {'button_type': 'btn-success', 'text': 'Four', 'sqcolor': 'beige'},
-        5: {'button_type': 'btn-danger', 'text': 'Five', 'sqcolor': 'purple'}
-    };
+    $scope.selected_sample_size = 5;
+    $scope.sample_sizes = [
+        {size:2, text:'n = 2'},
+        {size:5, text:'n = 5'},
+        {size:10, text:'n = 10'},
+        {size:20, text:'n = 20'},
+        {size:30, text:'n = 30'}
+    ];
 
     $scope.get_good_items = function () {
         var items = [];
@@ -220,6 +220,11 @@ app.controller('MyCtrl', ['$rootScope','$scope', '$log', 'myservice','math', fun
     $scope.sample_1000 = function() {
         $log.log('sample1000');
     }
+
+    $scope.set_sample_size = function(n) {
+      $scope.selected_sample_size = n;
+        $log.log('sample size' + n);
+    };
 
 
 
