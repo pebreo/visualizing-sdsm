@@ -102,20 +102,21 @@
             to make the set bigger or smaller. These items will be picked and arranged in the Permutations and
             Combinations below.
           </p>
+           <p>
 
+          <h3>Choose a sample size n</h3>
+          </p>
           <form role="form">
 
             <div class="form-group">
-              <button ng-click="remove_item()" type="submit" class="btn btn-success">Remove Item</button>
-              <button ng-click="additem()" type="submit" class="btn btn-success">Add Item</button>
+              <button ng-click="sample_5()" type="submit" class="btn btn-success">n = 5</button>
+              <button ng-click="sample_100()" type="submit" class="btn btn-success">n = 100</button>
+              <button ng-click="sample_1000()" type="submit" class="btn btn-success">n = 1000</button>
             </div>
 
           </form>
 
-          <p>
 
-          <h3>{{item_count}} items</h3>
-          </p>
           <div class="btn-group btn-group-justified" role="group" aria-label="...">
             <my-elem></my-elem>
           </div>

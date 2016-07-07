@@ -22,12 +22,13 @@ app.directive('comboElem', function () {
     };
 });
 
-app.controller('MyCtrl', ['$rootScope','$scope', '$log', 'myservice', function ($rootScope, $scope, $log, myservice) {
+app.controller('MyCtrl', ['$rootScope','$scope', '$log', 'myservice','math', function ($rootScope, $scope, $log, myservice, math) {
     $scope.myservice = myservice;
 
     $log.log($scope.myservice.xxx);
     $scope.dist_type = 'normal';
     $scope.selected_data = [];
+    $scope.selected_population = [];
     $scope.selected_title = '';
 
     $scope.item_names = {
@@ -88,35 +89,6 @@ app.controller('MyCtrl', ['$rootScope','$scope', '$log', 'myservice', function (
     };
 
 
-    var sum = function (obj, key) {
-        var arr;
-        if (_.isArray(obj) && typeof obj[0] === 'number') {
-            arr = obj;
-        } else {
-            key = key || 'value';
-            arr = _.pluck(obj, key);
-        }
-        var val = 0, i;
-        for (i = 0; i < arr.length; i++)
-            val += (arr[i] - 0);
-        return val;
-    };
-
-    var sort = function (arr) {
-        return _.sortBy(arr, _.identity);
-    };
-
-    var mean = ave = average = function (obj, key) {
-        return sum(obj, key) / _.size(obj);
-    };
-
-    var median = function (arr) {
-        arr = arr.slice(0); // create copy
-        var middle = (arr.length + 1) / 2,
-            sorted = sort(arr);
-        return (sorted.length % 2) ? sorted[middle - 1] : (sorted[middle - 1.5] + sorted[middle - 0.5]) / 2;
-    };
-
 
     $scope.normal_dist = {
         title: 'Normal Distribution',
@@ -170,6 +142,7 @@ app.controller('MyCtrl', ['$rootScope','$scope', '$log', 'myservice', function (
             $log.log('condition normal');
             $scope.selected_data = $scope.normal_dist['freq'];
             $scope.selected_title = $scope.normal_dist['title'];
+            $scope.selected_population = $scope.normal_dist['data'];
             $scope.data = [
                 $scope.selected_data
             ];
@@ -181,14 +154,15 @@ app.controller('MyCtrl', ['$rootScope','$scope', '$log', 'myservice', function (
 
                 }
             };
-            $scope.median = median($scope.normal_dist['data']);
-            $scope.mean = mean($scope.normal_dist['data']);
+            $scope.median = math.median($scope.normal_dist['data']);
+            $scope.mean = math.mean($scope.normal_dist['data']);
 
         };
         if ($scope.dist_type === 'skewed') {
             $log.log('condition skewed');
             $scope.selected_data = $scope.skewed_dist['freq'];
             $scope.selected_title = $scope.skewed_dist['title'];
+            $scope.selected_population = $scope.skewed_dist['data'];
             $scope.data = [
                 $scope.selected_data
             ];
@@ -200,15 +174,16 @@ app.controller('MyCtrl', ['$rootScope','$scope', '$log', 'myservice', function (
 
                 }
             };
-            $scope.median = median($scope.skewed_dist['data']);
-            $scope.mean = mean($scope.skewed_dist['data']);
+            $scope.median = math.median($scope.skewed_dist['data']);
+            $scope.mean = math.mean($scope.skewed_dist['data']);
         }
         ;
         if ($scope.dist_type === 'uniform') {
             $log.log('condition uniform');
 
-             $scope.selected_data = $scope.uniform_dist['freq'];
+            $scope.selected_data = $scope.uniform_dist['freq'];
             $scope.selected_title = $scope.uniform_dist['title'];
+            $scope.selected_population = $scope.uniform_dist['data'];
             $scope.data = [
                 $scope.selected_data
             ];
@@ -220,29 +195,38 @@ app.controller('MyCtrl', ['$rootScope','$scope', '$log', 'myservice', function (
 
                 }
             };
-            $scope.median = median($scope.uniform_dist['data']);
-            $scope.mean = mean($scope.uniform_dist['data']);
+            $scope.median = math.median($scope.uniform_dist['data']);
+            $scope.mean = math.mean($scope.uniform_dist['data']);
         }
         ;
 
     });
 
-    $scope.get_sample = function() {
+    $scope.sample_5 = function() {
        // using lodash function
        // n = 5.
-      $scope.baz = _.sampleSize([1, 2, 3], 2);
-
+      $scope.baz = _.sampleSize($scope.selected_population, 5);
+        $log.log('sample size ' + $scope.baz.length);
         // n = 500
 
         // n = 1000
-    };
+    }
+
+    $scope.sample_100 = function() {
+        $log.log('sample100');
+
+    }
+
+    $scope.sample_1000 = function() {
+        $log.log('sample1000');
+    }
 
 
 
 
 }]);
 
-app.controller('SecondCtrl', ['$rootScope','$scope', '$log','myservice', function ($rootScope, $scope, $log, myservice) {
+app.controller('SecondCtrl', ['$rootScope','$scope', '$log','myservice', 'math', function ($rootScope, $scope, $log, myservice, math) {
 
     $scope.myservice = myservice;
     $scope.dist_type = 'normal';
@@ -314,8 +298,8 @@ app.controller('SecondCtrl', ['$rootScope','$scope', '$log','myservice', functio
 
                 }
             };
-            $scope.median = median($scope.normal_dist['data']);
-            $scope.mean = mean($scope.normal_dist['data']);
+            $scope.median = math.median($scope.normal_dist['data']);
+            $scope.mean = math.mean($scope.normal_dist['data']);
 
         };
         if ($scope.dist_type === 'skewed') {
@@ -333,8 +317,8 @@ app.controller('SecondCtrl', ['$rootScope','$scope', '$log','myservice', functio
 
                 }
             };
-            $scope.median = median($scope.skewed_dist['data']);
-            $scope.mean = mean($scope.skewed_dist['data']);
+            $scope.median = math.median($scope.skewed_dist['data']);
+            $scope.mean = math.mean($scope.skewed_dist['data']);
         }
         ;
         if ($scope.dist_type === 'uniform') {
@@ -353,8 +337,8 @@ app.controller('SecondCtrl', ['$rootScope','$scope', '$log','myservice', functio
 
                 }
             };
-            $scope.median = median($scope.uniform_dist['data']);
-            $scope.mean = mean($scope.uniform_dist['data']);
+            $scope.median = math.median($scope.uniform_dist['data']);
+            $scope.mean = math.mean($scope.uniform_dist['data']);
         }
         ;
 
@@ -378,4 +362,39 @@ app.controller('SecondCtrl', ['$rootScope','$scope', '$log','myservice', functio
 // used to share data between controllers
 app.service('myservice', function() {
       this.xxx = "yyy";
+});
+
+// used to share data between controllers
+app.service('math', function() {
+
+
+    this.sum = function (obj, key) {
+        var arr;
+        if (_.isArray(obj) && typeof obj[0] === 'number') {
+            arr = obj;
+        } else {
+            key = key || 'value';
+            arr = _.pluck(obj, key);
+        }
+        var val = 0, i;
+        for (i = 0; i < arr.length; i++)
+            val += (arr[i] - 0);
+        return val;
+    };
+
+    this.sort = function (arr) {
+        return _.sortBy(arr, _.identity);
+    };
+
+    this.mean = ave = average = function (obj, key) {
+        return this.sum(obj, key) / _.size(obj);
+    };
+
+    this.median = function (arr) {
+        arr = arr.slice(0); // create copy
+        var middle = (arr.length + 1) / 2,
+            sorted = this.sort(arr);
+        return (sorted.length % 2) ? sorted[middle - 1] : (sorted[middle - 1.5] + sorted[middle - 0.5]) / 2;
+    };
+
 });
