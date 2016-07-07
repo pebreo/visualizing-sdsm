@@ -15,10 +15,10 @@ app.directive('permElem', function () {
     };
 });
 
-app.directive('comboElem', function () {
+app.directive('tableElem', function () {
     return {
         restrict: 'E',
-        templateUrl: 'combo_items.html'
+        templateUrl: 'table_items.html'
     };
 });
 
@@ -285,6 +285,16 @@ app.controller('MyCtrl', ['$rootScope','$scope', '$log', 'myservice','math', fun
         return clean_samples;
     };
 
+
+    $scope.is_rep_size_small = function() {
+        return $scope.selected_rep_size <= 5;
+    }
+    $scope.is_rep_size_1k = function() {
+        return $scope.selected_rep_size == 1000;
+    }
+    $scope.is_rep_size_10k = function() {
+        return $scope.selected_rep_size  == 10000;
+    }
 
 
 

@@ -103,7 +103,7 @@
         </div>
       </div>
     </div>
-
+`
     <div class="col-md-6">
 
       <div class="panel panel-default">
@@ -147,25 +147,8 @@
 
 
         </form>
-        <table class="table table-striped">
-          <colgroup>
-            <col class="col-md-6">
-            <col class="col-md-6">
-            <thead>
-            <th>Sample Data, n = {{selected_sample_size}}
-            </th>
-            <th>Sample Mean</th>
-            </thead>
-          </colgroup>
-          <tbody>
-          <tr ng-repeat="d in created_samples">
-            <td class="col-md-6">S<sub>{{$index+1}}</sub> = {{d.sample}}</td>
-            <td class="col-md-6">x&#772;<sub>{{$index+1}}</sub> = {{d.mean}}</td>
 
-          </tr>
-          </tbody>
-
-        </table>
+          <table-elem></table-elem>
 
       </div>
     </div>
