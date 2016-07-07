@@ -52,7 +52,7 @@
 </head>
 
 <body ng-app="myApp">
-<div ng-controller="MyCtrl" class="container">
+<div  class="container">
 
   <div class="page-header">
     <h1 class="text-center">Visualizing The Standard Distribution of the Sample Mean</h1>
@@ -63,7 +63,7 @@
   </div>
 
 
-  <div class="row">
+  <div ng-controller="MyCtrl" class="row">
 
     <div class="col-md-6">
 
@@ -143,7 +143,7 @@
     <div class="col-md-6"></div>
   </div>
 
-  <div class="row">
+  <div ng-controller="SecondCtrl" class="row">
     <div class="col-md-6">
 
       <div class="panel panel-default">
@@ -179,8 +179,11 @@
             and therefore is counted as 1 single combination.
           </p>
 
-          <p> From the set of items we created above, there are <b>{{combinations_count}} combinations for
-            {{item_count}} items, given {{slot_count}} slots</b>.</p>
+       <p>Mean = {{mean}}</p>
+          <p>Median = {{median}}</p>
+          <canvas id="bar" class="chart chart-bar"
+                  chart-data="data" chart-labels="labels" chart-options="options"> chart-series="series">
+          </canvas>
         </div>
 
         <!-- List group -->
