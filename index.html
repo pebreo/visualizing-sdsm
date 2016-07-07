@@ -113,48 +113,27 @@
             <div class="form-group">
               <div class="dropdown">
                 <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                  n = 5
+                  {{selected_sample_size_name}}
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                  <li ng-repeat="item in sample_sizes" ng-init="size = item.size" ng-click="set_sample_size(size)"><a href="">{{item.text}}</a></li>
+                  <li ng-repeat="size in Utils.keys(sample_sizes)" ng-click="set_sample_size(size)">
+                    <a href="">n = {{size}}</a></li>
                 </ul>
               </div>
 
             </div>
 
           </form>
-          <h3>Choose a sample size n</h3>
+          <h3>Sample data</h3>
+          <table class="table">
+            <tbody>
+            <tr ng-repeat="d in created_samples">
+              <td>{{d}}</td>
+            </tr>
+            </tbody>
 
-          <form role="form">
-            <div class="form-group">
-              <button ng-click="sample_5()" type="submit" class="btn btn-success">n = 5</button>
-              <button ng-click="sample_100()" type="submit" class="btn btn-success">n = 100</button>
-              <button ng-click="sample_1000()" type="submit" class="btn btn-success">n = 1000</button>
-            </div>
-
-          </form>
-
-
-          <div class="btn-group btn-group-justified" role="group" aria-label="...">
-            <my-elem></my-elem>
-          </div>
-
-          <p>
-
-          <form role="form">
-
-            <div class="form-group">
-              <button ng-click="decrease_slot()" type="submit" class="btn btn-info">Decrease Number of Slots</button>
-              <button ng-click="add_slot()" type="submit" class="btn btn-info">Increase Number of Slots</button>
-            </div>
-
-          </form>
-          </p>
-          <p>
-
-          <h3>{{slot_count}} slots</h3>
-          </p>
+          </table>
 
         </div>
       </div>

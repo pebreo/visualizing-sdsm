@@ -24,20 +24,26 @@ app.directive('comboElem', function () {
 
 app.controller('MyCtrl', ['$rootScope','$scope', '$log', 'myservice','math', function ($rootScope, $scope, $log, myservice, math) {
     $scope.myservice = myservice;
-
+    $rootScope.Utils = {
+        keys : Object.keys
+    };
     $log.log($scope.myservice.xxx);
     $scope.dist_type = 'normal';
     $scope.selected_data = [];
     $scope.selected_population = [];
     $scope.selected_title = '';
     $scope.selected_sample_size = 5;
-    $scope.sample_sizes = [
-        {size:2, text:'n = 2'},
-        {size:5, text:'n = 5'},
-        {size:10, text:'n = 10'},
-        {size:20, text:'n = 20'},
-        {size:30, text:'n = 30'}
-    ];
+    $scope.selected_sample_size_name = 'n = 5';
+
+    $scope.created_samples = [];
+
+    $scope.sample_sizes = {
+        2: {text:'n = 2'},
+        5: {text:'n = 5'},
+        10: {text:'n = 10'},
+        20: {text:'n = 20'},
+        30: {text:'n = 30'}
+    };
 
     $scope.get_good_items = function () {
         var items = [];
@@ -202,28 +208,34 @@ app.controller('MyCtrl', ['$rootScope','$scope', '$log', 'myservice','math', fun
 
     });
 
+    $scope.$watch('selected_sample_size', function() {
+       $log.log('size changed');
+    });
+
     $scope.sample_5 = function() {
        // using lodash function
-       // n = 5.
-      $scope.baz = _.sampleSize($scope.selected_population, 5);
-        $log.log('sample size ' + $scope.baz.length);
-        // n = 500
+       // n =
+        var s = [];
+        for(i=0; i<7; i++) {
+            s = _.sampleSize($scope.selected_population, 5);
+            $scope.created_samples.push(s);
+        }
+        $log.log($scope.created_samples);
 
-        // n = 1000
-    }
+    };
 
     $scope.sample_100 = function() {
         $log.log('sample100');
 
-    }
+    };
 
     $scope.sample_1000 = function() {
         $log.log('sample1000');
-    }
+    };
 
     $scope.set_sample_size = function(n) {
       $scope.selected_sample_size = n;
-        $log.log('sample size' + n);
+      $scope.selected_sample_size_name = $scope.sample_sizes[n].text;
     };
 
 
