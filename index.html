@@ -129,7 +129,8 @@
           <table class="table">
             <tbody>
             <tr ng-repeat="d in created_samples">
-              <td>{{d}}</td>
+              <td>S<sub>{{$index+1}}</sub> = {{d}}</td>
+              <td ng-if="$index+2 < create_samples.length">S<sub>{{$index+2}}</sub> = {{d}}</td>
             </tr>
             </tbody>
 

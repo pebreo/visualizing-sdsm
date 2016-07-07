@@ -208,8 +208,22 @@ app.controller('MyCtrl', ['$rootScope','$scope', '$log', 'myservice','math', fun
 
     });
 
+    var clean_samples = [];
     $scope.$watch('selected_sample_size', function() {
+        var s = [];
+        var temp_s = [];
        $log.log('size changed');
+        for(i=0; i<7; i++) {
+            s = _.sampleSize($scope.selected_population, $scope.selected_sample_size);
+            temp_s.push(s);
+        }
+        $scope.created_samples = temp_s;
+        $log.log($scope.created_samples);
+
+        //var clean_samples = [];
+        for(i=0;i<$scope.created_samples.length;i++) {
+            clean_samples.push({index:i+1, data:$scope.created_samples[i]});
+        }
     });
 
     $scope.sample_5 = function() {
@@ -237,6 +251,13 @@ app.controller('MyCtrl', ['$rootScope','$scope', '$log', 'myservice','math', fun
       $scope.selected_sample_size = n;
       $scope.selected_sample_size_name = $scope.sample_sizes[n].text;
     };
+
+    var clean_samples = []
+    $scope.clean_created_samples = function() {
+
+        return clean_samples;
+    };
+
 
 
 
