@@ -35,6 +35,9 @@ app.controller('MyCtrl', ['$rootScope','$scope', '$log', 'myservice','math', fun
     $scope.selected_sample_size = 5;
     $scope.selected_sample_size_name = 'n = 5';
 
+    $scope.selected_rep_size = 5;
+    $scope.selected_rep_size_name = 'n = 5';
+
     $scope.created_samples = [];
 
     $scope.sample_sizes = {
@@ -43,6 +46,12 @@ app.controller('MyCtrl', ['$rootScope','$scope', '$log', 'myservice','math', fun
         10: {text:'n = 10'},
         20: {text:'n = 20'},
         30: {text:'n = 30'}
+    };
+
+    $scope.rep_sizes = {
+        5: {text:'n = 5'},
+        1000: {text:'n = 1000'},
+        10000: {text:'n = 10000'},
     };
 
     $scope.get_good_items = function () {
@@ -248,11 +257,18 @@ app.controller('MyCtrl', ['$rootScope','$scope', '$log', 'myservice','math', fun
     };
 
     $scope.set_sample_size = function(n) {
-      $scope.selected_sample_size = n;
-      $scope.selected_sample_size_name = $scope.sample_sizes[n].text;
+        $scope.selected_sample_size = n;
+        $scope.selected_sample_size_name = $scope.sample_sizes[n].text;
+    };
+
+    $scope.set_rep_size = function(n) {
+        $scope.selected_rep_size = n;
+        $scope.selected_rep_size_name = $scope.rep_sizes[n].text;
+        $log.log('rep size '+ $scope.selected_rep_size);
     };
 
     var clean_samples = []
+
     $scope.clean_created_samples = function() {
 
         return clean_samples;
