@@ -30,7 +30,7 @@ app.controller('MyCtrl', ['$rootScope', '$scope', '$log', 'myservice', 'math', f
     $log.log($scope.myservice.xxx);
     $scope.dist_type = 'normal';
     $scope.selected_data = [];
-    $scope.selected_population = [];
+    
     $scope.selected_title = '';
     $scope.selected_sample_size = 5;
     $scope.selected_sample_size_name = 'n = 5';
@@ -157,7 +157,7 @@ app.controller('MyCtrl', ['$rootScope', '$scope', '$log', 'myservice', 'math', f
             $log.log('condition normal');
             $scope.selected_data = $scope.normal_dist['freq'];
             $scope.selected_title = $scope.normal_dist['title'];
-            $scope.selected_population = $scope.normal_dist['data'];
+            myservice.selected_population = $scope.normal_dist['data'];
             $scope.data = [
                 $scope.selected_data
             ];
@@ -178,7 +178,7 @@ app.controller('MyCtrl', ['$rootScope', '$scope', '$log', 'myservice', 'math', f
             $log.log('condition skewed');
             $scope.selected_data = $scope.skewed_dist['freq'];
             $scope.selected_title = $scope.skewed_dist['title'];
-            $scope.selected_population = $scope.skewed_dist['data'];
+            myservice.selected_population = $scope.skewed_dist['data'];
             $scope.data = [
                 $scope.selected_data
             ];
@@ -199,7 +199,7 @@ app.controller('MyCtrl', ['$rootScope', '$scope', '$log', 'myservice', 'math', f
 
             $scope.selected_data = $scope.uniform_dist['freq'];
             $scope.selected_title = $scope.uniform_dist['title'];
-            $scope.selected_population = $scope.uniform_dist['data'];
+            myservice.selected_population = $scope.uniform_dist['data'];
             $scope.data = [
                 $scope.selected_data
             ];
@@ -226,7 +226,7 @@ app.controller('MyCtrl', ['$rootScope', '$scope', '$log', 'myservice', 'math', f
         var mn = 0;
         $log.log('size changed');
         for (i = 0; i < $scope.selected_rep_size; i++) {
-            s = _.sampleSize($scope.selected_population, $scope.selected_sample_size);
+            s = _.sampleSize(myservice.selected_population, $scope.selected_sample_size);
             mn = math.mean(s);
             temp_s.push({sample: s, mean: mn});
         }
@@ -256,7 +256,7 @@ app.controller('MyCtrl', ['$rootScope', '$scope', '$log', 'myservice', 'math', f
         // n =
         var s = [];
         for (i = 0; i < 7; i++) {
-            s = _.sampleSize($scope.selected_population, 5);
+            s = _.sampleSize(myservice.selected_population, 5);
             $scope.created_samples.push(s);
         }
         $log.log($scope.created_samples);
@@ -334,6 +334,7 @@ app.controller('SecondCtrl', ['$rootScope', '$scope', '$log', 'myservice', 'math
 app.service('myservice', function () {
     this.xxx = "yyy";
     this.selected_sample_means = [];
+    this.selected_population = [];
 });
 
 // used to share data between controllers
