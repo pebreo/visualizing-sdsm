@@ -314,11 +314,20 @@ app.controller('SecondCtrl', ['$rootScope', '$scope', '$log', 'myservice', 'math
     $scope.trigger = '';
     $scope.current_sample_means = [];
 
+    $scope.sdsm_mean = 0;
+    $scope.sdsm_median = 0;
+
 
     $scope.labels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15',
         '16', '17', '18', '19', '20', '21'];
     $scope.series = [''];
+     $scope.options = {
+                title: {
+                    display: true,
+                    text: 'Distribution of Sample Means (Sampling Distribution of Sample Means)'
 
+                }
+            };
 
     $scope.$watch('myservice.selected_sample_means', function () {
         $log.log('selected samples changed');
@@ -346,41 +355,60 @@ app.controller('SecondCtrl', ['$rootScope', '$scope', '$log', 'myservice', 'math
     var vals = [];
     var samps = [];
 
-    var sample_means = [];
-    var get_sample_means = function(reps, n) {
+    $scope.current_sample_means = [];
+    var append_sample_means = function(reps, n) {
         for(i=0;i<reps;i++) {
            samps = _.sampleSize(myservice.selected_population, n);
-            sample_means.push(Math.round(math.mean(samps)));
+            $scope.current_sample_means.push(Math.round(math.mean(samps)));
         };
-        return sample_means;
+
     };
 
-    var samp_means = [];
-    var draw_5reps = function() {
-      // make histogram
+    $scope.clear_sdsm = function(){
+      $scope.data = _.map(math.range(1,21), function(a) {return 0});
+        $scope.current_sample_means  = [];
+    };
 
-        samp_means = get_sample_means(reps=5,n=5);
-        $log.log(samp_means);
-        hist = math.make_hist(samp_means, math.range(1,21));
-        $log.log(hist);
+    $scope.clear_sdsm();
+
+    var draw_5reps = function() {
+        // make histogram
+
+        append_sample_means(reps=5,n=5);
+        //$log.log($scope.current_sample_means);
+        hist = math.make_hist($scope.current_sample_means, math.range(1,21));
+
        // set histogram value
-       // $scope.data = _.map(new_hist, 'freq');
+       $scope.data = _.map(hist, 'freq');
+
+
     };
 
     $scope.$watch('trigger', function () {
         if($scope.trigger === 'animate') {
             $log.log('trigger animate');
+            $scope.trigger = '';
         };
         if($scope.trigger === '5reps') {
             $log.log('trigger 5 reps');
             draw_5reps();
+            $scope.trigger = '';
         };
         if($scope.trigger === '1k_reps') {
             $log.log('trigger 1k reps');
+            $scope.trigger = '';
         };
         if($scope.trigger === '10k_reps') {
             $log.log('trigger 10k reps');
+            $scope.trigger = '';
         };
+    });
+
+    var mean_data = 0;
+    $scope.$watch('trigger', function () {
+
+       $scope.sdsm_mean = math.mean($scope.data);
+       $scope.sdsm_median =  math.median($scope.data);
     });
 
 

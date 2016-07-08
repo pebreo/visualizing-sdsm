@@ -200,13 +200,14 @@
               <button ng-click="plot_5reps()" type="submit" class="btn btn-success">Plot 5 sample means</button>
               <button ng-click="plot_1k_reps()" type="submit" class="btn btn-success">Plot 1000</button>
               <button ng-click="plot_10k_reps()" type="submit" class="btn btn-success">Plot 10,000</button>
+              <button ng-click="clear_sdsm()" type="submit" class="btn btn-warning">Clear</button>
             </div>
 
           </form>
 
-        <p>Mean = {{mean}}</p>
+        <p><h4>Mean = {{sdsm_mean}}</h4></p>
 
-        <p>Median = {{median}}</p>
+        <p><h4>Median = {{sdsm_median}}</h4></p>
         <canvas id="bar" class="chart chart-bar"
                 chart-data="data" chart-labels="labels" chart-options="options"> chart-series="series">
         </canvas>
