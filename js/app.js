@@ -469,8 +469,17 @@ app.service('math', function () {
         return (sorted.length % 2) ? sorted[middle - 1] : (sorted[middle - 1.5] + sorted[middle - 0.5]) / 2;
     };
 
+    /*
+      Takes a list of integers and returns
+      a list of objects that make a histogram from
+      range 1 to 21
+
+      TODO: should take a range and dynamically create a full_hist
+      from that range
+     */
     this.make_hist = function (values) {
 
+        // make a list of objects that have a key and frequency values
         new_hist = _.chain(values).groupBy(function (a) {
             return a
         }).
@@ -482,12 +491,13 @@ app.service('math', function () {
             }).sortBy(function (d) {
                 d.key
             }).value();
-        //console.log(new_hist);
+
 
         var full_hist = [];
         var current_key = undefined;
         var ao = undefined;
 
+        // populate the full_hist list
         _.forEach(empty_hist, function (obj) {
             current_key = obj.key;
             current_freq = obj.freq;
@@ -499,8 +509,8 @@ app.service('math', function () {
                 //console.log(ao);
             }
             full_hist.push({key: current_key, freq: current_freq});
-        })
-        console.log(full_hist);
+        });
+        //console.log(full_hist);
         return full_hist;
     };
   /*
