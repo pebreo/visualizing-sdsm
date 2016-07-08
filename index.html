@@ -194,6 +194,17 @@
           and therefore is counted as 1 single combination.
         </p>
 
+          <form role="form">
+
+            <div class="form-group">
+              <button ng-click="plot_animate()" type="submit" class="btn btn-success">Animate</button>
+              <button ng-click="plot_5reps()" type="submit" class="btn btn-success">Plot 5 reps</button>
+              <button ng-click="plot_1k_reps()" type="submit" class="btn btn-success">Plot 1000 reps</button>
+              <button ng-click="plot_10k_reps()" type="submit" class="btn btn-success">Plot 10000 reps</button>
+            </div>
+
+          </form>
+
         <p>Mean = {{mean}}</p>
 
         <p>Median = {{median}}</p>
