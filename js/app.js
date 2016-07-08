@@ -324,7 +324,7 @@ app.controller('SecondCtrl', ['$rootScope', '$scope', '$log', 'myservice', 'math
      $scope.options = {
                 title: {
                     display: true,
-                    text: 'Distribution of Sample Means (Sampling Distribution of Sample Means)'
+                    text: 'Distribution of Sample Means (aka SDSM)'
 
                 }
             };
