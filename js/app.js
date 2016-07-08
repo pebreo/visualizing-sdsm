@@ -399,11 +399,17 @@ app.controller('SecondCtrl', ['$rootScope', '$scope', '$log', 'myservice', 'math
         if($scope.trigger === '1k_reps') {
             $log.log('trigger 1k reps');
             draw_reps(1000);
+
+            $scope.sdsm_mean = math.mean($scope.current_sample_means);
+            $scope.sdsm_median =  math.median($scope.current_sample_means);
             $scope.trigger = '';
         };
         if($scope.trigger === '10k_reps') {
             $log.log('trigger 10k reps');
             draw_reps(10000);
+
+            $scope.sdsm_mean = math.mean($scope.current_sample_means);
+            $scope.sdsm_median =  math.median($scope.current_sample_means);
             $scope.trigger = '';
         };
     });
