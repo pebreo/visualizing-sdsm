@@ -22,10 +22,10 @@ app.directive('tableElem', function () {
     };
 });
 
-app.controller('MyCtrl', ['$rootScope','$scope', '$log', 'myservice','math', function ($rootScope, $scope, $log, myservice, math) {
+app.controller('MyCtrl', ['$rootScope', '$scope', '$log', 'myservice', 'math', function ($rootScope, $scope, $log, myservice, math) {
     $scope.myservice = myservice;
     $rootScope.Utils = {
-        keys : Object.keys
+        keys: Object.keys
     };
     $log.log($scope.myservice.xxx);
     $scope.dist_type = 'normal';
@@ -41,18 +41,18 @@ app.controller('MyCtrl', ['$rootScope','$scope', '$log', 'myservice','math', fun
     $scope.created_samples = [];
 
     $scope.sample_sizes = {
-        2: {text:'n = 2'},
-        5: {text:'n = 5'},
-        10: {text:'n = 10'},
-        20: {text:'n = 20'},
-        30: {text:'n = 30'}
+        2: {text: 'n = 2'},
+        5: {text: 'n = 5'},
+        10: {text: 'n = 10'},
+        20: {text: 'n = 20'},
+        30: {text: 'n = 30'}
     };
 
     $scope.rep_sizes = {
-        2: {text:'n = 2'},
-        5: {text:'n = 5'},
-        1000: {text:'n = 1000'},
-        10000: {text:'n = 10000'}
+        2: {text: 'n = 2'},
+        5: {text: 'n = 5'},
+        1000: {text: 'n = 1000'},
+        10000: {text: 'n = 10000'}
     };
 
     $scope.get_good_items = function () {
@@ -103,7 +103,6 @@ app.controller('MyCtrl', ['$rootScope','$scope', '$log', 'myservice','math', fun
         }
 
     };
-
 
 
     $scope.normal_dist = {
@@ -173,7 +172,8 @@ app.controller('MyCtrl', ['$rootScope','$scope', '$log', 'myservice','math', fun
             $scope.median = math.median($scope.normal_dist['data']);
             $scope.mean = math.mean($scope.normal_dist['data']);
 
-        };
+        }
+        ;
         if ($scope.dist_type === 'skewed') {
             $log.log('condition skewed');
             $scope.selected_data = $scope.skewed_dist['freq'];
@@ -213,21 +213,22 @@ app.controller('MyCtrl', ['$rootScope','$scope', '$log', 'myservice','math', fun
             };
             $scope.median = math.median($scope.uniform_dist['data']);
             $scope.mean = math.mean($scope.uniform_dist['data']);
-        };
+        }
+        ;
 
         update_created_samples();
 
     });
 
-    var update_created_samples = function() {
+    var update_created_samples = function () {
         var s = [];
         var temp_s = [];
         var mn = 0;
-       $log.log('size changed');
-        for(i=0; i<$scope.selected_rep_size; i++) {
+        $log.log('size changed');
+        for (i = 0; i < $scope.selected_rep_size; i++) {
             s = _.sampleSize($scope.selected_population, $scope.selected_sample_size);
             mn = math.mean(s);
-            temp_s.push({sample:s, mean:mn});
+            temp_s.push({sample: s, mean: mn});
         }
         $scope.created_samples = temp_s;
     };
@@ -236,21 +237,21 @@ app.controller('MyCtrl', ['$rootScope','$scope', '$log', 'myservice','math', fun
         $log.log('update means');
     };
 
-    $scope.$watch('selected_sample_size', function() {
+    $scope.$watch('selected_sample_size', function () {
         update_created_samples();
 
     });
 
-    $scope.$watch('selected_rep_size', function() {
+    $scope.$watch('selected_rep_size', function () {
         update_created_samples();
     });
 
 
-    $scope.sample_5 = function() {
-       // using lodash function
-       // n =
+    $scope.sample_5 = function () {
+        // using lodash function
+        // n =
         var s = [];
-        for(i=0; i<7; i++) {
+        for (i = 0; i < 7; i++) {
             s = _.sampleSize($scope.selected_population, 5);
             $scope.created_samples.push(s);
         }
@@ -258,56 +259,53 @@ app.controller('MyCtrl', ['$rootScope','$scope', '$log', 'myservice','math', fun
 
     };
 
-    $scope.sample_100 = function() {
+    $scope.sample_100 = function () {
         $log.log('sample100');
 
     };
 
-    $scope.sample_1000 = function() {
+    $scope.sample_1000 = function () {
         $log.log('sample1000');
     };
 
-    $scope.set_sample_size = function(n) {
+    $scope.set_sample_size = function (n) {
         $scope.selected_sample_size = n;
         $scope.selected_sample_size_name = $scope.sample_sizes[n].text;
     };
 
-    $scope.set_rep_size = function(n) {
+    $scope.set_rep_size = function (n) {
         $scope.selected_rep_size = n;
         $scope.selected_rep_size_name = $scope.rep_sizes[n].text;
-        $log.log('rep size '+ $scope.selected_rep_size);
+        $log.log('rep size ' + $scope.selected_rep_size);
     };
 
     var clean_samples = [];
 
-    $scope.clean_created_samples = function() {
+    $scope.clean_created_samples = function () {
 
         return clean_samples;
     };
 
 
-    $scope.is_rep_size_small = function() {
+    $scope.is_rep_size_small = function () {
         return $scope.selected_rep_size <= 5;
-    }
-    $scope.is_rep_size_1k = function() {
+    };
+    $scope.is_rep_size_1k = function () {
         return $scope.selected_rep_size == 1000;
-    }
-    $scope.is_rep_size_10k = function() {
-        return $scope.selected_rep_size  == 10000;
-    }
-
-
+    };
+    $scope.is_rep_size_10k = function () {
+        return $scope.selected_rep_size == 10000;
+    };
 
 
 }]);
 
-app.controller('SecondCtrl', ['$rootScope','$scope', '$log','myservice', 'math', function ($rootScope, $scope, $log, myservice, math) {
+app.controller('SecondCtrl', ['$rootScope', '$scope', '$log', 'myservice', 'math', function ($rootScope, $scope, $log, myservice, math) {
 
     $scope.myservice = myservice;
     $scope.dist_type = 'normal';
     $scope.selected_data = [];
     $scope.selected_title = '';
-
 
 
     $scope.normal_dist = {
@@ -376,7 +374,8 @@ app.controller('SecondCtrl', ['$rootScope','$scope', '$log','myservice', 'math',
             $scope.median = math.median($scope.normal_dist['data']);
             $scope.mean = math.mean($scope.normal_dist['data']);
 
-        };
+        }
+        ;
         if ($scope.dist_type === 'skewed') {
             $log.log('condition skewed');
             $scope.selected_data = $scope.skewed_dist['freq'];
@@ -399,7 +398,7 @@ app.controller('SecondCtrl', ['$rootScope','$scope', '$log','myservice', 'math',
         if ($scope.dist_type === 'uniform') {
             $log.log('condition uniform');
 
-             $scope.selected_data = $scope.uniform_dist['freq'];
+            $scope.selected_data = $scope.uniform_dist['freq'];
             $scope.selected_title = $scope.uniform_dist['title'];
             $scope.data = [
                 $scope.selected_data
@@ -419,10 +418,10 @@ app.controller('SecondCtrl', ['$rootScope','$scope', '$log','myservice', 'math',
 
     });
 
-    $scope.get_sample = function() {
-       // using lodash function
-       // n = 5.
-      $scope.baz = _.sampleSize([1, 2, 3], 2);
+    $scope.get_sample = function () {
+        // using lodash function
+        // n = 5.
+        $scope.baz = _.sampleSize([1, 2, 3], 2);
 
         // n = 500
 
@@ -430,17 +429,15 @@ app.controller('SecondCtrl', ['$rootScope','$scope', '$log','myservice', 'math',
     };
 
 
-
-
 }]);
 
 // used to share data between controllers
-app.service('myservice', function() {
-      this.xxx = "yyy";
+app.service('myservice', function () {
+    this.xxx = "yyy";
 });
 
 // used to share data between controllers
-app.service('math', function() {
+app.service('math', function () {
 
 
     this.sum = function (obj, key) {
@@ -471,5 +468,47 @@ app.service('math', function() {
             sorted = this.sort(arr);
         return (sorted.length % 2) ? sorted[middle - 1] : (sorted[middle - 1.5] + sorted[middle - 0.5]) / 2;
     };
+
+    this.make_hist = function (values) {
+
+        new_hist = _.chain(values).groupBy(function (a) {
+            return a
+        }).
+            map(function (values, key) {
+                return {
+                    key: key.toString(),
+                    freq: values.length
+                }
+            }).sortBy(function (d) {
+                d.key
+            }).value();
+        //console.log(new_hist);
+
+        var full_hist = [];
+        var current_key = undefined;
+        var ao = undefined;
+
+        _.forEach(empty_hist, function (obj) {
+            current_key = obj.key;
+            current_freq = obj.freq;
+            ao = _.find(new_hist, function (o) {
+                return o.key == current_key && o.freq > 0
+            });
+            if (ao !== undefined) {
+                current_freq = ao.freq;
+                //console.log(ao);
+            }
+            full_hist.push({key: current_key, freq: current_freq});
+        })
+        console.log(full_hist);
+        return full_hist;
+    };
+  /*
+  X = [
+  {text: 1},
+  {text: 2}
+]
+a = _.map(X, 'text');
+   */
 
 });
