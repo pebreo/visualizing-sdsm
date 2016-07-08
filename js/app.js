@@ -232,7 +232,7 @@ app.controller('MyCtrl', ['$rootScope', '$scope', '$log', 'myservice', 'math', f
         }
         $scope.created_samples = temp_s;
         // get the samples means and round
-        $scope.myservice.selected_sample_means = _.chain(temp_s).map('mean').map(Math.round).value();
+        myservice.selected_sample_means = _.chain(temp_s).map('mean').map(Math.round).value();
         //$scope.myservice.selected_sample_means = _.map(temp_s, 'mean');
         //$log.log($scope.myservice.selected_sample_means);
     };
@@ -311,6 +311,8 @@ app.controller('SecondCtrl', ['$rootScope', '$scope', '$log', 'myservice', 'math
     $scope.selected_data = [];
     $scope.selected_title = '';
 
+    $scope.trigger = '';
+    $scope.current_sample_means = [];
 
 
     $scope.labels = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15',
@@ -324,8 +326,64 @@ app.controller('SecondCtrl', ['$rootScope', '$scope', '$log', 'myservice', 'math
     });
 
     $scope.plot_animate = function() {
-        $log.log(myservice.selected_sample_means);
+         $scope.trigger = 'animate';
     };
+
+    $scope.plot_5reps = function() {
+        $scope.trigger = '5reps';
+    };
+
+    $scope.plot_1k_reps = function() {
+        $scope.trigger = '1k_reps';
+    };
+
+    $scope.plot_10k_reps = function() {
+         $scope.trigger = '10k_reps';
+    };
+
+    var mn = 0;
+    var hist = [];
+    var vals = [];
+    var samps = [];
+
+    var sample_means = [];
+    var get_sample_means = function(reps, n) {
+        for(i=0;i<reps;i++) {
+           samps = _.sampleSize(myservice.selected_population, n);
+            sample_means.push(Math.round(math.mean(samps)));
+        };
+        return sample_means;
+    };
+
+    var samp_means = [];
+    var draw_5reps = function() {
+      // make histogram
+
+        samp_means = get_sample_means(reps=5,n=5);
+        $log.log(samp_means);
+        hist = math.make_hist(samp_means, math.range(1,21));
+        $log.log(hist);
+       // set histogram value
+       // $scope.data = _.map(new_hist, 'freq');
+    };
+
+    $scope.$watch('trigger', function () {
+        if($scope.trigger === 'animate') {
+            $log.log('trigger animate');
+        };
+        if($scope.trigger === '5reps') {
+            $log.log('trigger 5 reps');
+            draw_5reps();
+        };
+        if($scope.trigger === '1k_reps') {
+            $log.log('trigger 1k reps');
+        };
+        if($scope.trigger === '10k_reps') {
+            $log.log('trigger 10k reps');
+        };
+    });
+
+
 
 
 }]);
@@ -370,6 +428,15 @@ app.service('math', function () {
         return (sorted.length % 2) ? sorted[middle - 1] : (sorted[middle - 1.5] + sorted[middle - 0.5]) / 2;
     };
 
+    this.range = function (min, max, step) {
+        step = step || 1;
+        var input = [];
+        for (var i = min; i <= max; i += step) {
+            input.push(i);
+        }
+        return input;
+    };
+
     /*
       Takes a list of integers and returns
       a list of objects that make a histogram from
@@ -378,8 +445,13 @@ app.service('math', function () {
       TODO: should take a range and dynamically create a full_hist
       from that range
      */
-    this.make_hist = function (values) {
-
+    this.make_hist = function (values, range) {
+        empty_hist = _.map(range, function(a) {
+            return {
+                key: a,
+                freq: 0
+            }
+        });
         // make a list of objects that have a key and frequency values
         new_hist = _.chain(values).groupBy(function (a) {
             return a
