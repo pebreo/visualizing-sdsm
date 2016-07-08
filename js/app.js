@@ -365,50 +365,54 @@ app.controller('SecondCtrl', ['$rootScope', '$scope', '$log', 'myservice', 'math
     };
 
     $scope.clear_sdsm = function(){
-      $scope.data = _.map(math.range(1,21), function(a) {return 0});
+      $scope.data = [_.map(math.range(1,21), function(a) {return 0})];
         $scope.current_sample_means  = [];
+        $scope.sdsm_mean = 0;
+        $scope.sdsm_median = 0;
     };
 
     $scope.clear_sdsm();
 
-    var draw_5reps = function() {
+    var draw_reps = function(reps) {
         // make histogram
 
-        append_sample_means(reps=5,n=5);
+        append_sample_means(reps=reps,n=5);
         //$log.log($scope.current_sample_means);
         hist = math.make_hist($scope.current_sample_means, math.range(1,21));
 
        // set histogram value
-       $scope.data = _.map(hist, 'freq');
+       $scope.data = [_.map(hist, 'freq')];
 
 
     };
 
     $scope.$watch('trigger', function () {
-        if($scope.trigger === 'animate') {
-            $log.log('trigger animate');
-            $scope.trigger = '';
-        };
+
         if($scope.trigger === '5reps') {
             $log.log('trigger 5 reps');
-            draw_5reps();
+            draw_reps(5);
+
+            $scope.sdsm_mean = math.mean($scope.current_sample_means);
+            $scope.sdsm_median =  math.median($scope.current_sample_means);
             $scope.trigger = '';
         };
         if($scope.trigger === '1k_reps') {
             $log.log('trigger 1k reps');
+            draw_reps(1000);
             $scope.trigger = '';
         };
         if($scope.trigger === '10k_reps') {
             $log.log('trigger 10k reps');
+            draw_reps(10000);
             $scope.trigger = '';
         };
     });
 
     var mean_data = 0;
-    $scope.$watch('trigger', function () {
+    $scope.$watch('current_sample_means', function () {
 
-       $scope.sdsm_mean = math.mean($scope.data);
-       $scope.sdsm_median =  math.median($scope.data);
+       //$scope.sdsm_mean = math.mean($scope.current_sample_means);
+       //$scope.sdsm_median =  math.median($scope.current_sample_means);
     });
 
 
@@ -421,6 +425,8 @@ app.service('myservice', function () {
     this.xxx = "yyy";
     this.selected_sample_means = [];
     this.selected_population = [];
+    this.population_mean = 0;
+    this.population_median = 0;
 });
 
 // used to share data between controllers
